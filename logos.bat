@@ -11,7 +11,10 @@ set TEMPLATE=%CD%
 cd %1
 
 set BILD=DSC_0001.jpg
-ECHO Bearbeite Bild %BILD%
+set ZIEL_BILD=%BILD%
+IF NOT [%4]==[] set ZIEL_BILD=%4
+
+ECHO Bearbeite Bild %1\%BILD% und speichere als %ZIEL_BILD%
 
 set LOGO=%TEMPLATE%\%2.png
 ECHO Nutze Logo-Vorlage: %LOGO% 
@@ -27,15 +30,15 @@ echo Benutze zweites Logo: %AUTOHAUS%
 IF %AUTOHAUS%==true (
 	 set LOGO2=%TEMPLATE%\%3.png
 	 ECHO Nutze Logo-Vorlage: %LOGO2% 
-	 convert %LOGO% -resize %WIDTH% sizelogo2.png
+	 convert %LOGO2% -resize %WIDTH% sizelogo2.png
 ) 
 
 :conv
  IF %AUTOHAUS%==false ( 
-	convert -verbose %BILD% -page +0+0 sizelogo.png -flatten out.jpg
+	convert -verbose %BILD% -page +0+0 sizelogo.png -flatten %ZIEL_BILD%
 	del sizelogo.png
  ) ELSE ( 
-	convert -verbose %BILD% -page +0+0 sizelogo.png -page +0+0 sizelogo2.png  -flatten out.jpg
+	convert -verbose %BILD% -page +0+0 sizelogo.png -page +0+0 sizelogo2.png  -flatten %ZIEL_BILD%
 	del sizelogo2.png
  )  
 GOTO end
