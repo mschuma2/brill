@@ -23,13 +23,14 @@ ECHO Nutze Logo-Vorlage: %LOGO%
 for /f  %%i in ('identify -format "%%w" %BILD% ') do  set WIDTH=%%i
 ECHO Breite des Bildes %BILD%: %WIDTH%px
 
-echo Skaliere das Logo auf %WIDTH%px
+echo Skaliere das Logo %LOGO% auf %WIDTH%px
 convert %LOGO% -resize %WIDTH% sizelogo.png
 
 echo Benutze zweites Logo: %AUTOHAUS%
 IF %AUTOHAUS%==true (
 	 set LOGO2=%TEMPLATE%\%3.png
 	 ECHO Nutze Logo-Vorlage: %LOGO2% 
+	 echo Skaliere das Logo %LOGO2% auf %WIDTH%px
 	 convert %LOGO2% -resize %WIDTH% sizelogo2.png
 ) 
 
@@ -54,3 +55,4 @@ GOTO end
 :end
 cd %OLDDIR%
  echo Konvertierung abgeschlossen.
+ echo Ergebnis gespeichert in %ZIEL_BILD%
